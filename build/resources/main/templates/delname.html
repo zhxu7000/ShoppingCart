@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Delete Item</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Delete Item</h1>
+<p>Total Cost: $<span th:text="${shoppingBasket.getValue(user)}"></span></p>
+
+<form action="#" th:action="@{/delname}" method="post">
+    <table>
+        <thead>
+        <tr>
+            <th>Item Name</th>
+            <th>Item Cost</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${items}">
+            <td th:text="${item.key}"></td>
+            <td><input type="number" name="itemCounts" th:value="${item.value}" min="0"></td>
+            <td><input type="checkbox" th:name="itemNames" th:value="${item.key}" checked data-reverse></td>
+        </tr>
+        </tbody>
+    </table>
+    <input type="submit" value="Remove Items" />
+</form>
+
+<a href="/cart">Back to Shopping Cart</a>
+</body>
+</html>

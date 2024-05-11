@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Shopping Cart Users</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="container">
+
+    <h1 >Shopping Cart Users</h1>
+    <form action="#" th:action="@{/deleteuser}" method="post">
+        <table>
+            <thead>
+            <tr>
+                <th>User</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tr th:each="user : ${users}">
+
+                <td th:text="${user}">User</td>
+                <td><input type="checkbox" th:name="userToDelete" th:value="${user}" checked/></td>
+            </tr>
+
+        </table><br>
+        <button type="button" onclick="deleteSelected()">Delete User</button>
+    </form>
+
+    <br>
+    <a th:href="@{/newuser.html} " class="btn btn-secondary">Add new user</a>
+    <a th:href="@{/logout}" class="btn btn-success">logout</a>
+
+</div>
+
+<script>
+    function deleteSelected() {
+        var uncheckedCheckboxes = document.querySelectorAll('input[name=userToDelete]:not(:checked)');
+
+        if (uncheckedCheckboxes.length > 0) {
+            if (confirm("Are you sure you want to delete the selected users?")) {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/deleteuser';
+
+                uncheckedCheckboxes.forEach(function(checkbox) {
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'userToDelete';
+                    input.value = checkbox.value;
+                    form.appendChild(input);
+                });
+
+                document.body.appendChild(form);
+                form.submit();
+            }
+        } else {
+            alert("Please uncheck at least one user to delete.");
+        }
+    }
+
+</script>
+
+</body>
+</html>

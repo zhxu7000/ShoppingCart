@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cart</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding-top: 50px;
+            background-image: linear-gradient(to bottom right, #E6E9F0, #EFEFEF);
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .btn {
+            margin: 5px;
+            color: #333; /* Dark text for readability */
+            background-color: #f8f8f8; /* Light background */
+            border: 1px solid #ddd; /* Subtle border */
+            transition: all 0.3s ease;
+            display: block; /* Make buttons block level for full width */
+            width: 100%;
+        }
+        .btn:hover, .btn:focus {
+            background-color: #ececec; /* Slightly darker on hover */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transform: translateY(-1px);
+        }
+        form {
+            margin-top: 20px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        input[type="number"] {
+            transition: all 0.3s ease;
+        }
+        input[type="number"]:focus {
+            box-shadow: 0 0 8px rgba(70, 150, 250, 0.5);
+            border-color: #4696FA;
+        }
+        .navbar-toggler {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            border: none;
+            background: none;
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+            width: 30px;
+            height: 30px;
+        }
+        #menu {
+            padding: 15px;
+            border-top: 1px solid #ddd; /* Visual separation */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>My Cart</h1>
+    <p>Total Cost: $<span th:text="${shoppingBasket.getValue(user)}"></span></p>
+    <form action="#" th:action="@{/cart}" method="post" id="cart">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Item</th>
+                <th>Count</th>
+            </tr>
+            </thead>
+            <tr th:each="item : ${shoppingBasket.items}">
+                <td th:text="${item.key}"></td>
+                <td><input type="number" class="form-control" name="counts" th:value="${item.value}" min="0"></td>
+            </tr>
+        </table><br>
+        <button type="submit" class="btn btn-primary" form="cart">Update Counts</button>
+    </form>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="menu" class="collapse">
+        <a th:href="@{/newname}" class="btn">Add New Item</a>
+        <a th:href="@{/delname}" class="btn">Delete Item</a>
+        <a th:href="@{/updatename}" class="btn">Update Item</a>
+        <a th:href="@{/logout}" class="btn">Logout</a>
+    </div>
+    <hr>
+</div>
+</body>
+</html>
